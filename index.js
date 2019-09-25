@@ -17,26 +17,33 @@ const ACCESS_CODES = {
 const airtable = new Airtable({ apiKey: AIRTABLE_API_KEY })
   .base(AIRTABLE_BASE_ID)
   .table('Members')
-
+let lastCache = new Date();
 let membersCache = [];
+loadCache(true)
 
-airtable.list({
-  view: "lockbot",
-  maxRecords: 200
-}).then(({ records }) => {
-  membersCache = records.map(element => {
-    const {fields} = element;
-    return {id: fields.ID, ccid: fields.CCID ? fields.CCID : null, access: fields.Access ? fields.Access : null  }
-  }).filter(element => {
-    return element.access !== null && element.ccid !== null;
-  });
-  console.log(membersCache)
-})
 
 lines.on("data", function (data) {
   isValidCometCard(data)
-  //openLock();
+  loadCache();
 });
+
+function loadCache(force = false){
+  if ( !force && (new Date().getTime() - lastCache.getTime()) / 1000 < 300){
+    return;
+  }
+  airtable.list({
+    view: "lockbot",
+    maxRecords: 200
+  }).then(({ records }) => {
+    membersCache = records.map(element => {
+      const {fields} = element;
+      return {id: fields.ID, ccid: fields.CCID ? fields.CCID : null, access: fields.Access ? fields.Access : null  }
+    }).filter(element => {
+      return element.access !== null && element.ccid !== null;
+    });
+    console.log(membersCache)
+  })
+}
 
 function isValidCometCard(number){
   let results;
@@ -47,6 +54,7 @@ function isValidCometCard(number){
     if(found && found.access.find(x => x == ACCESS_CODES["3D_Printing"])){
       openLock();
     }else{
+      loadCache();
       console.log("No Access");
     }
     console.log(found)
