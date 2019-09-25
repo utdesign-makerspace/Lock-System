@@ -18,8 +18,8 @@ lines.on("data", function(data) {
 });
 
 function openLock(){
-  Lock.write(0);
+  Lock.write(1);
   setTimeout(function(){
-    Lock.write(1);
+    Lock.write(0);
   }, 3000)
 }
