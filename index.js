@@ -1,5 +1,6 @@
 const { Gpio } = require('onoff');
 const Lock = new Gpio(17, 'out');
+Lock.writeSync(0);
 
 require('dotenv').config();
 const {HID_VENDOR, HID_PRODUCT, AIRTABLE_BASE_ID, AIRTABLE_API_KEY} = process.env; 
