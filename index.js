@@ -1,4 +1,4 @@
-const {GPIO} = require('onoff');
+const { Gpio } = require('onoff');
 const Lock = new Gpio(17, 'out');
 
 require('dotenv').config();
@@ -11,9 +11,9 @@ const HID = require('node-hid');
 var lines = new KeyboardLines({ vendorId: HID_VENDOR, productId: HID_PRODUCT });
 
 console.log(HID.devices());
-openLock();
+
 lines.on("data", function(data) {
-  
+  openLock();
 });
 
 function openLock(){
