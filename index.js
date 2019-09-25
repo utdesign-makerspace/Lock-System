@@ -1,6 +1,6 @@
 const { Gpio } = require('onoff');
 const Lock = new Gpio(17, 'out');
-Lock.writeSync(0);
+Lock.writeSync(1);
 
 require('dotenv').config();
 const { HID_VENDOR, HID_PRODUCT, AIRTABLE_BASE_ID, AIRTABLE_API_KEY } = process.env;
@@ -18,12 +18,12 @@ lines.on("data", function (data) {
 });
 
 function openLock() {
-  Lock.write(1);
+  Lock.write(0);
   setTimeout(function () {
     closeLock();
   }, 3000)
 }
 
 function closeLock() {
-  Lock.write(0);
+  Lock.write(1);
 }
