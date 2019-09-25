@@ -34,7 +34,7 @@ airtable.list({
 })
 
 lines.on("data", function (data) {
-  
+  isValidCometCard(data)
   //openLock();
 });
 
