@@ -8,4 +8,4 @@ RUN npm install --production --unsafe-perm && npm cache verify && rm -rf /tmp/*
 
 COPY . ./
 
-CMD tail -f /dev/null
+CMD npm 
