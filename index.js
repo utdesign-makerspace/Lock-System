@@ -20,6 +20,10 @@ lines.on("data", function (data) {
 function openLock() {
   Lock.write(1);
   setTimeout(function () {
-    Lock.write(0);
+    closeLock();
   }, 3000)
+}
+
+function closeLock() {
+  Lock.write(0);
 }
