@@ -1,6 +1,10 @@
+const express = require('express');
 const { Gpio } = require('onoff');
+
 const Lock1 = new Gpio(17, 'out');
 const Lock2 = new Gpio(27, 'out');
+
+let app = express();
 
 Lock1.writeSync(1);
 
@@ -78,3 +82,10 @@ function closeLock() {
   Lock1.write(1);
   Lock2.write(1);
 }
+
+app.post("/unlock", (req, res) => {
+  openLock();
+})
+
+
+app.listen(80);
