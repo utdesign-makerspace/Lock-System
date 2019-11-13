@@ -9,7 +9,8 @@
     "express": "^4.17.1",
     "node-hid": "^0.7.9",
     "node-hid-stream": "git+https://github.com/ATechAdventurer/node-hid-stream.git",
-    "onoff": "^5.0.0"
+    "onoff": "^5.0.0",
+    "pushover-notifications": "^1.2.1"
   },
   "devDependencies": {},
   "scripts": {

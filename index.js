@@ -1,5 +1,6 @@
 const express = require('express');
 const { Gpio } = require('onoff');
+const PushOver = require('pushover-notifications');
 
 const Lock1 = new Gpio(17, 'out');
 const Lock2 = new Gpio(27, 'out');
@@ -52,6 +53,19 @@ function loadCache(force = false) {
   })
 }
 
+function notify({access, number}){
+  const p = new PushOver({
+    user: process.env['PUSHOVER_GROUP'],
+    token: process.env['PUSHOVER_API_KEY'],
+  })
+  let msg = {
+    message: `At ${new Date()}, a comet card swipe ${access ? "succeded" : "failed"} ${number}`,	// required
+    title: `3D Printer Lock System ${access ? "opened" : "failed to open"}`,
+    sound: 'magic',
+    priority: 1
+  }
+}
+
 function isValidCometCard(number) {
   let results;
   if (results = number.match(/;([0-9]{0,})=(20[0-9]{0,})\?\+[0-9]{0,}\?/)) {
@@ -59,9 +73,11 @@ function isValidCometCard(number) {
     let numbers = results.slice(1);
     let found = membersCache.find(o => o.ccid == numbers[0] || o.ccid == numbers[1]);
     if (found && found.access.find(x => x == ACCESS_CODES["3D_Printing"])) {
+      notify({access: true, numbers});
       openLock();
     } else {
       loadCache();
+      notify({access: false, numbers});
       console.log("No Access");
     }
     console.log(found)
