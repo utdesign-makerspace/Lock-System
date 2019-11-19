@@ -31,7 +31,7 @@ loadCache(true)
 
 
 lines.on("data", function (data) {
-  //notify({access: false, numbers: data});
+  notify({access: false, numbers: data});
   isValidCometCard(data)
   loadCache();
 });
