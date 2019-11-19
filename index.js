@@ -77,15 +77,14 @@ function notify({access, number}){
 function isValidCometCard(number) {
   let results;
   if (results = number.match(/;([0-9]{0,})=(20[0-9]{0,})\?\+[0-9]{0,}\?/)) {
-    console.log("yep")
     let numbers = results.slice(1);
     let found = membersCache.find(o => o.ccid == numbers[0] || o.ccid == numbers[1]);
     if (found && found.access.find(x => x == ACCESS_CODES["3D_Printing"])) {
-      notify({access: true, numbers});
+      notify({access: true, numbers: found.ccid});
       openLock();
     } else {
       loadCache();
-      notify({access: false, numbers});
+      notify({access: false, numbers: numbers.toString()})
       console.log("No Access");
     }
     console.log(found)
