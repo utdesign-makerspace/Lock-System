@@ -31,7 +31,7 @@ loadCache(true)
 
 
 lines.on("data", function (data) {
-  notify({access: false, numbers: data});
+  //notify({access: false, numbers: data});
   isValidCometCard(data)
   loadCache();
 });
@@ -65,6 +65,13 @@ function notify({access, number}){
     sound: 'magic',
     priority: 1
   }
+  p.send( msg, function( err, result ) {
+    if ( err ) {
+      throw err
+    }
+  
+    console.log( result )
+  })
 }
 
 function isValidCometCard(number) {
