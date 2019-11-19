@@ -31,7 +31,7 @@ loadCache(true)
 
 
 lines.on("data", function (data) {
-  notify({access: false, numbers: data});
+  //notify({access: false, data});
   isValidCometCard(data)
   loadCache();
 });
@@ -54,7 +54,7 @@ function loadCache(force = false) {
   })
 }
 
-function notify({access, number}){
+function notify(access, number){
   const p = new PushOver({
     user: process.env['PUSHOVER_GROUP'],
     token: process.env['PUSHOVER_API_KEY'],
