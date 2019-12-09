@@ -94,6 +94,7 @@ function isValidCometCard(number) {
 }
 
 function openLock() {
+  console.log("Opening Lock")
   Lock1.write(0);
   Lock2.write(0);
   setTimeout(function () {
