@@ -80,11 +80,11 @@ function isValidCometCard(number) {
     let numbers = results.slice(1);
     let found = membersCache.find(o => o.ccid == numbers[0] || o.ccid == numbers[1]);
     if (found && found.access.find(x => x == ACCESS_CODES["3D_Printing"])) {
-      notify(true, JSON.stringify(found));
+      //notify(true, JSON.stringify(found));
       openLock();
     } else {
       loadCache();
-      notify(false, numbers.toString())
+      //notify(false, numbers.toString())
       console.log("No Access");
     }
     console.log(found)
