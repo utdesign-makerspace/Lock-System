@@ -109,6 +109,7 @@ function closeLock() {
 
 app.post("/unlock", (req, res) => {
   openLock();
+  res.send("Success");
 })
 
 
